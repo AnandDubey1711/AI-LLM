@@ -1,34 +1,30 @@
 import { useState } from 'react';
-import {createTheme} from "@mui/material/styles";
 import Navbar from '../components/Navbars/MainNavbar';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
 
-const useStyles = createTheme((theme)=>({
-  root: {
-    backgroundImage: `url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgrFOqG6PjPhS0sFukUOQzE4GYBe8e7Rw56Q&usqp=CAU')`, // Replace 'path_to_your_image.jpg' with the actual path to your image
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    minHeight: '100vh', // Ensures the background covers the entire viewport height
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: theme.spacing(2),
-  },
-  card: {
-    background: '#fff',
-    borderRadius: '0.75rem',
-    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+const rootStyle = {
+  minHeight: '100vh',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  padding: '2rem',
+  backgroundImage: `url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgrFOqG6PjPhS0sFukUOQzE4GYBe8e7Rw56Q&usqp=CAU')`,
+  backgroundSize: 'cover',
+  backgroundPosition: 'center',
+};
 
-    backgroundColor: 'white',
-    padding: theme.spacing(5),
-    textAlign: 'center',
-  },
-}));
+const cardStyle = {
+  background: 'rgba(255, 255, 255, 0.8)', // Semi-transparent white background
+  borderRadius: '0.75rem',
+  boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+  padding: '2rem',
+  textAlign: 'center',
+  maxWidth: '80%', // Limiting card width
+};
 
-const API_TOKEN = "Token_Api";
+const API_TOKEN = "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";
 async function query(data) {
   const response = await fetch(
     "https://api-inference.huggingface.co/models/cardiffnlp/twitter-roberta-base-sentiment-latest",
@@ -43,7 +39,6 @@ async function query(data) {
 }
 
 function Sentiment() {
-  // const classes = useStyles(); // Apply styles
   const [textInput, setTextInput] = useState('');
   const [sentimentResult, setSentimentResult] = useState(null);
 
@@ -61,8 +56,8 @@ function Sentiment() {
   return (
     <>
       <Navbar />
-      <div className={useStyles.root}>
-        <Card className={useStyles.card}>
+      <div style={rootStyle}>
+        <Card style={cardStyle}>
           <h1 style={{
             fontSize: '2.25rem',
             fontWeight: '700',
@@ -70,10 +65,10 @@ function Sentiment() {
             marginBottom: '2rem',
             marginTop: '-1rem',
             paddingTop: '0.5rem',
-
           }}>
             Sentiment <span style={{ color: '#1E40AF' }}>Analysis</span>
-          </h1>          <CardContent>
+          </h1>
+          <CardContent>
             <textarea
               style={{
                 height: "30vh",
@@ -104,6 +99,21 @@ function Sentiment() {
                 <h2>Sentiment Score</h2>
                 {/* Rendering sentiment scores */}
                 {/* You can render a graph here using a charting library */}
+                {/* Negative Sentiment */}
+                <h3>Label: {sentimentResult[0][0].label.toUpperCase()}</h3>
+                <h3>Score: {Math.round(sentimentResult[0][0].score * 100) / 100}</h3>
+                <br />
+
+                {/* Neutral Sentiment */}
+
+                <h3>Label: {sentimentResult[0][1].label.toUpperCase()}</h3>
+                <h3>Score: {Math.round(sentimentResult[0][1].score * 100) / 100}</h3>
+                <br />
+
+                {/* Positive Sentiment */}
+                <h3>Label: {sentimentResult[0][2].label.toUpperCase()}</h3>
+                <h3>Score: {Math.round(sentimentResult[0][2].score * 100) / 100}</h3>
+                <br />
               </div>
             )}
           </CardContent>

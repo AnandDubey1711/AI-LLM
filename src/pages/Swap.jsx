@@ -1,26 +1,87 @@
-import React from 'react';
-import { Box } from '@mui/material';
+import { useState } from 'react';
+import axios from 'axios';
+import { Card, CardContent, TextField, Button, Typography } from '@mui/material';
 import Navbar from '../components/Navbars/MainNavbar';
 
 const Swap = () => {
+  const [inputText, setInputText] = useState('');
+  const [completedText, setCompletedText] = useState('');
+  const [error, setError] = useState(null);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const encodedParams = new URLSearchParams();
+    encodedParams.set('text', inputText);
+
+    const options = {
+      method: 'POST',
+      url: 'https://free-openai-alternative-llama-text-completion.p.rapidapi.com/llama-text-generator',
+      headers: {
+        'content-type': 'application/json',
+        'X-RapidAPI-Key': 'b1fad8e6e4msha6887784c780ecdp138704jsnc0fb734394f3',
+        'X-RapidAPI-Host': 'free-openai-alternative-llama-text-completion.p.rapidapi.com'
+      },
+      data: encodedParams,
+    };
+
+    try {
+      const response = await axios.request(options);
+
+      if (response.data.generated_text) {
+        setCompletedText(response.data.generated_text);
+        setError(null);
+      } else {
+        setError('No completion found for the input.');
+      }
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
   return (
     <>
       <Navbar />
-      <Box
-        sx={{
-          backgroundImage: `url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgrFOqG6PjPhS0sFukUOQzE4GYBe8e7Rw56Q&usqp=CAU')`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          width: '100vw', // Adjust according to your layout needs
-          height: '100vh', // Adjust according to your layout needs
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          color: 'white', // Optionally change text color for better contrast
-        }}
-      >
-        Swap
-      </Box>
+      <div style={{ backgroundImage: "url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgrFOqG6PjPhS0sFukUOQzE4GYBe8e7Rw56Q&usqp=CAU')", backgroundSize: 'cover', minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <Card style={{ maxWidth: 900 }}>
+          <CardContent>
+            <Typography variant="h4" align="center" gutterBottom>
+              <h1 style={{
+                fontSize: '2.25rem',
+                fontWeight: '700',
+                color: '#2D3748',
+                marginBottom: '2rem',
+                marginTop: '-1rem',
+                paddingTop: '0.5rem',
+
+              }}>
+                Text <span style={{ color: '#1E40AF' }}>Completion</span>
+              </h1>                       </Typography>            <form onSubmit={handleSubmit}>
+              <TextField
+                label="Enter text"
+                variant="outlined"
+                fullWidth
+                value={inputText}
+                onChange={(e) => setInputText(e.target.value)}
+                required
+              />
+              <Button type="submit" variant="contained" color="primary" fullWidth style={{ marginTop: 10 }}>Complete</Button>
+            </form>
+            {completedText && (
+              <div>
+                <Typography variant="h6" gutterBottom style={{ marginTop: 20 }}>Completed Text:</Typography>
+                <Typography variant="body1">{completedText}</Typography>
+              </div>
+            )}
+            {error && (
+              <div>
+                <Typography variant="h6" gutterBottom style={{ marginTop: 20 }}>Error:</Typography>
+                <Typography variant="body1" color="error">{error}</Typography>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      </div>
     </>
   );
 };

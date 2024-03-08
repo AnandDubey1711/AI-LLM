@@ -3,7 +3,7 @@ import { Box } from '@mui/material';
 import Navbar from "../components/Navbars/MainNavbar";
 
 const ImagePage = () => {
-  const apiKey = import.meta.env.VITE_REACT_APP_API_KEY;
+  const apiKey = "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";
   // console.log(apiKey)
   // console.log("Hello")
   const [loading, setLoading] = useState(false);
