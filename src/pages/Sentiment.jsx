@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Navbar from '../components/Navbars/MainNavbar';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
+import ReactApexChart from 'react-apexcharts';
 
 const rootStyle = {
   minHeight: '100vh',
@@ -41,6 +42,8 @@ async function query(data) {
 function Sentiment() {
   const [textInput, setTextInput] = useState('');
   const [sentimentResult, setSentimentResult] = useState(null);
+  const [chartOptions, setChartOptions] = useState({});
+  const [chartSeries, setChartSeries] = useState([]);
 
   const handleInputChange = (event) => {
     setTextInput(event.target.value);
@@ -50,6 +53,28 @@ function Sentiment() {
     if (textInput) {
       const result = await query({ "inputs": textInput });
       setSentimentResult(result);
+
+      // Prepare data for the chart
+      const sentimentLabels = result[0].map(item => item.label.toUpperCase());
+      const sentimentScores = result[0].map(item => Math.round(item.score * 100) / 100);
+
+      setChartOptions({
+        labels: sentimentLabels,
+        title: {
+          text: 'Sentiment Analysis',
+          align: 'center',
+          style: {
+            color: '#2D3748',
+            fontSize: '20px',
+            fontWeight: 'bold',
+          }
+        }
+      });
+
+      setChartSeries([{
+        name: 'Score',
+        data: sentimentScores
+      }]);
     }
   };
 
@@ -96,24 +121,7 @@ function Sentiment() {
             </button>
             {sentimentResult && (
               <div style={{ color: 'black' }}>
-                <h2>Sentiment Score</h2>
-                {/* Rendering sentiment scores */}
-                {/* You can render a graph here using a charting library */}
-                {/* Negative Sentiment */}
-                <h3>Label: {sentimentResult[0][0].label.toUpperCase()}</h3>
-                <h3>Score: {Math.round(sentimentResult[0][0].score * 100) / 100}</h3>
-                <br />
-
-                {/* Neutral Sentiment */}
-
-                <h3>Label: {sentimentResult[0][1].label.toUpperCase()}</h3>
-                <h3>Score: {Math.round(sentimentResult[0][1].score * 100) / 100}</h3>
-                <br />
-
-                {/* Positive Sentiment */}
-                <h3>Label: {sentimentResult[0][2].label.toUpperCase()}</h3>
-                <h3>Score: {Math.round(sentimentResult[0][2].score * 100) / 100}</h3>
-                <br />
+                <ReactApexChart options={chartOptions} series={chartSeries} type="bar" height={350} />
               </div>
             )}
           </CardContent>
