@@ -14,22 +14,25 @@ const Swap = () => {
     const encodedParams = new URLSearchParams();
     encodedParams.set('text', inputText);
 
+
     const options = {
       method: 'POST',
-      url: 'https://free-openai-alternative-llama-text-completion.p.rapidapi.com/llama-text-generator',
+      url: 'https://simple-chatgpt-api.p.rapidapi.com/ask',
       headers: {
         'content-type': 'application/json',
         'X-RapidAPI-Key': 'b1fad8e6e4msha6887784c780ecdp138704jsnc0fb734394f3',
-        'X-RapidAPI-Host': 'free-openai-alternative-llama-text-completion.p.rapidapi.com'
+        'X-RapidAPI-Host': 'simple-chatgpt-api.p.rapidapi.com'
       },
-      data: encodedParams,
+      data: {
+        question: 'what is javascript?'
+      }
     };
 
     try {
       const response = await axios.request(options);
 
-      if (response.data.generated_text) {
-        setCompletedText(response.data.generated_text);
+      if (response.data) {
+        setCompletedText(response.data);
         setError(null);
       } else {
         setError('No completion found for the input.');
@@ -45,18 +48,17 @@ const Swap = () => {
       <div style={{ backgroundImage: "url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgrFOqG6PjPhS0sFukUOQzE4GYBe8e7Rw56Q&usqp=CAU')", backgroundSize: 'cover', minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <Card style={{ maxWidth: 900 }}>
           <CardContent>
-            <Typography variant="h4" align="center" gutterBottom>
-              <h1 style={{
-                fontSize: '2.25rem',
-                fontWeight: '700',
-                color: '#2D3748',
-                marginBottom: '2rem',
-                marginTop: '-1rem',
-                paddingTop: '0.5rem',
-
-              }}>
-                Text <span style={{ color: '#1E40AF' }}>Completion</span>
-              </h1>                       </Typography>            <form onSubmit={handleSubmit}>
+            <h1 style={{
+              fontSize: '2.25rem',
+              fontWeight: '700',
+              color: '#2D3748',
+              marginBottom: '2rem',
+              marginTop: '-1rem',
+              paddingTop: '0.5rem',
+            }}>
+              Text <span style={{ color: '#1E40AF' }}>Completion</span>
+            </h1>
+            <form onSubmit={handleSubmit}>
               <TextField
                 label="Enter text"
                 variant="outlined"
