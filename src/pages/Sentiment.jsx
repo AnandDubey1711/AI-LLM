@@ -95,7 +95,7 @@ function Sentiment() {
               Analyze
             </button>
             {sentimentResult && (
-              <div>
+              <div style={{ color: 'black' }}>
                 <h2>Sentiment Score</h2>
                 {/* Rendering sentiment scores */}
                 {/* You can render a graph here using a charting library */}
