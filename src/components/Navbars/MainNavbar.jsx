@@ -16,6 +16,7 @@ import CallMadeIcon from "@mui/icons-material/CallMade";
 import LanguageIcon from "@mui/icons-material/Language";
 import LaunchButton from "../Buttons/LaunchButton";
 import MenuIcon from "@mui/icons-material/Menu";
+import { Link } from "react-router-dom";
 
 const { Logo } = navbarContent;
 
@@ -65,8 +66,9 @@ const Navbar = () => {
           flexWrap="wrap"
         >
           {/* Logo */}
-          <img src={Logo} style={{ height: "100%", objectFit: "contain" }} />
-
+          <Link to='/'>
+            <img src={Logo} style={{ height: "100%", objectFit: "contain" }} />
+          </Link>
           {/* Links */}
           {!isMobile && (
             <Stack
