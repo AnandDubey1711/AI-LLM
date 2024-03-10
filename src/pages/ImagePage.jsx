@@ -62,6 +62,7 @@ const ImagePage = () => {
           borderRadius: '0.75rem',
           boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
           textAlign: 'center',
+          marginTop: '100px'
         }}>
           <h1 style={{
             fontSize: '2.25rem',

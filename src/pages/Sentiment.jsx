@@ -23,6 +23,7 @@ const cardStyle = {
   padding: '2rem',
   textAlign: 'center',
   maxWidth: '80%', // Limiting card width
+  marginTop: '100px'
 };
 
 const API_TOKEN = "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";

@@ -96,7 +96,7 @@ const Navbar = () => {
             </Stack>
           )}
 
-          {/* Action Buttons */}
+          {/* Action Buttons*/}
           {isMobile ? (
             <IconButton>
               <MenuIcon sx={{ color: "text.secondary" }} />
