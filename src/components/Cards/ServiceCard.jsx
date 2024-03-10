@@ -2,15 +2,9 @@ import { Box, Stack, Typography } from "@mui/material";
 import React from "react";
 import OutlinedButton from "../Buttons/OutlinedButton";
 import Title from "../Title";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const ServiceCard = ({ title, subtitle, image, link }) => {
-  const navigate = useNavigate();
-
-  const handleClick = () => {
-    // Redirect to the specified link
-    navigate(link);
-  };
 
   return (
     <Box
@@ -48,11 +42,14 @@ const ServiceCard = ({ title, subtitle, image, link }) => {
             objectFit: "contain",
             flex: 1,
           }}
+          alt={title} // Provide alt text for accessibility
         />
 
-        <OutlinedButton arrow fit onClick={handleClick}>
-          Try Now
-        </OutlinedButton>
+        <Link to={link} style={{ textDecoration: "none" }}>
+          <OutlinedButton arrow fit>
+            Try Now
+          </OutlinedButton>
+        </Link>
       </Stack>
     </Box>
   );

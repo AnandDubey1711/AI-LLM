@@ -170,7 +170,7 @@ export const section6Content = {
       subtitle:
         "A derivative-based product offering liquidity providers attractive APYs.",
       image: Sec6Image4,
-      link: 'https://ai-sumz-akd.netlify.app/'
+      link: 'https://ai-sumz-akd.netlify.app/',
     },
   ],
 };
