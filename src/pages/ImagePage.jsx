@@ -3,9 +3,7 @@ import { Box } from '@mui/material';
 import Navbar from "../components/Navbars/MainNavbar";
 
 const ImagePage = () => {
-  const apiKey = "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";
-  // console.log(apiKey)
-  // console.log("Hello")
+const apiKey = "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";
   const [loading, setLoading] = useState(false);
   const [output, setOutput] = useState(null);
 
@@ -15,7 +13,7 @@ const ImagePage = () => {
 
     const input = event.target.elements.input.value;
     const response = await fetch(
-      "https://api-inference.huggingface.co/models/runwayml/stable-diffusion-v1-5",
+      "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0",
       {
         method: "POST",
         headers: {
